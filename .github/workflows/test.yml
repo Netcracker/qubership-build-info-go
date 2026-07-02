@@ -2,9 +2,7 @@ name: Tests
 on:
   push:
     branches:
-      - '**'
-    tags-ignore:
-      - '**'
+      - main
   pull_request:
 # Ensures that only the latest commit is running for each PR at a time.
 # Ignores this rule for push events.
@@ -18,8 +16,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # macos-latest = arm64, macos-14-large = amd64
-        os: [ ubuntu-latest, windows-latest, macos-latest, macos-14-large ]
+        # macos-latest = arm64
+        # macos-14-large (amd64) is excluded: the large-runner label is unavailable
+        # to this repo, so those jobs fail instantly with zero steps.
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
         node: [ 14, 16, 16.9 ]
         include:
           - node: "14"
